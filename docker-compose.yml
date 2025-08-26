@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  appwrite:
+    image: appwrite/appwrite:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      _APP_ENV: production
+      _APP_OPENSSL_KEY_V1: "랜덤한_32바이트_키"
+      _APP_DOMAIN: your-domain.onrender.com
+      _APP_DOMAIN_TARGET: your-domain.onrender.com
