@@ -1,4 +1,6 @@
-my-project/
-├── Cargo.toml
-└── src/
-    └── main.rs
+[package]
+name = "my-project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
