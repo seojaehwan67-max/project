@@ -4,7 +4,7 @@ use std::io::prelude::*;
 use std::io::BufReader;
 
 fn main() {
-    // 환경변수 PORT 읽기, 없으면 기본 8000 사용
+    // 환경변수 PORT 읽기, 없으면 기본 8000
     let port = env::var("PORT").unwrap_or("8000".to_string());
     let addr = format!("0.0.0.0:{}", port);
 
@@ -15,7 +15,20 @@ fn main() {
         let mut stream = stream.expect("스트림 오류");
 
         let buf_reader = BufReader::new(&stream);
-        let request_line = buf_reader.lines().next().unwrap().unwrap();
+
+        let request_line = match buf_reader.lines().next() {
+            Some(line_result) => match line_result {
+                Ok(line) => line,
+                Err(e) => {
+                    eprintln!("요청 라인 읽기 실패: {}", e);
+                    continue;
+                }
+            },
+            None => {
+                eprintln!("요청 라인이 없습니다");
+                continue;
+            }
+        };
 
         println!("요청: {}", request_line);
 
