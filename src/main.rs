@@ -4,11 +4,12 @@ use std::io::prelude::*;
 use std::io::BufReader;
 
 fn main() {
-    let port = env::var("PORT").unwrap_or("8080".to_string());
+    // 환경변수 PORT 읽기, 없으면 기본 8000 사용
+    let port = env::var("PORT").unwrap_or("8000".to_string());
     let addr = format!("0.0.0.0:{}", port);
 
     let listener = TcpListener::bind(addr).expect("포트 바인딩 실패");
-    println!("서버가 포트 {} 에서 실행 중입니다", port);
+    println!("서버가 포트 {}에서 실행 중입니다", port);
 
     for stream in listener.incoming() {
         let mut stream = stream.expect("스트림 오류");
