@@ -4,7 +4,6 @@ use std::io::prelude::*;
 use std::io::BufReader;
 
 fn main() {
-    // 환경변수 PORT 읽기 (없으면 8080 사용)
     let port = env::var("PORT").unwrap_or("8080".to_string());
     let addr = format!("0.0.0.0:{}", port);
 
@@ -12,7 +11,7 @@ fn main() {
     println!("서버가 포트 {} 에서 실행 중입니다", port);
 
     for stream in listener.incoming() {
-        let stream = stream.expect("스트림 오류");
+        let mut stream = stream.expect("스트림 오류");
 
         let buf_reader = BufReader::new(&stream);
         let request_line = buf_reader.lines().next().unwrap().unwrap();
